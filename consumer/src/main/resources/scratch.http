@@ -1,0 +1,25 @@
+
+
+POST http://localhost:8080/bookings/
+Content-Type: application/json
+
+{
+  "id": 1,
+  "passengerName": "Dude",
+  "passengerContactNumber": "123",
+  "pickupTime": null,
+  "asap": true,
+  "waitingTime": null,
+  "numberOfPassengers": 2,
+  "price": 1000,
+  "rating": 5,
+  "createdOn": null,
+  "lastModifiedOn":null,
+  "tripWayPoints" : []
+}
+
+###
+
+DELETE http://localhost:8080/bookings/1
+
+###
