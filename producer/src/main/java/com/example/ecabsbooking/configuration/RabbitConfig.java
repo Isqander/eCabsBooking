@@ -1,4 +1,4 @@
-package com.example.ecabsbooking;
+package com.example.ecabsbooking.configuration;
 
 import org.springframework.amqp.core.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,15 +13,6 @@ public class RabbitConfig {
 
     @Value("${rabbitmq.exchange.booking}")
     private String exchangeBooking;
-
-    @Value("${rabbitmq.routingKey.add}")
-    private String routingKeyAdd;
-
-    @Value("${rabbitmq.routingKey.edit}")
-    private String routingKeyEdit;
-
-    @Value("${rabbitmq.routingKey.delete}")
-    private String routingKeyDelete;
 
     @Value("${rabbitmq.queue.audit}")
     private String queueAudit;
@@ -58,33 +49,38 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Exchange exchangeMessage(){
+    public FanoutExchange exchangeMessage(){
         return ExchangeBuilder.fanoutExchange(exchangeMessage).build();
     }
 
     @Bean
-    public Exchange exchangeBooking(){
-        return ExchangeBuilder.topicExchange(exchangeBooking).build();
+    public HeadersExchange exchangeBooking(){
+        return ExchangeBuilder.headersExchange(exchangeBooking).build();
     }
 
     @Bean
     public Binding bindingExchangeToExchange(){
-        return BindingBuilder.bind(exchangeBooking()).to(exchangeMessage()).with("any").noargs();
+        return BindingBuilder.bind(exchangeBooking()).to(exchangeMessage());
+    }
+
+    @Bean
+    public Binding bindingAuditQueue(){
+        return BindingBuilder.bind(messageAuditQueue()).to(exchangeMessage());
     }
 
     @Bean
     public Binding bindingAddQueue(){
-        return BindingBuilder.bind(bookingAddQueue()).to(exchangeBooking()).with(routingKeyAdd).noargs();
+        return BindingBuilder.bind(bookingAddQueue()).to(exchangeBooking()).where("action").matches("add");
     }
 
     @Bean
     public Binding bindingEditQueue(){
-        return BindingBuilder.bind(bookingEditQueue()).to(exchangeBooking()).with(routingKeyEdit).noargs();
+        return BindingBuilder.bind(bookingEditQueue()).to(exchangeBooking()).where("action").matches("edit");
     }
 
     @Bean
     public Binding bindingDeleteQueue(){
-        return BindingBuilder.bind(bookingDeleteQueue()).to(exchangeBooking()).with(routingKeyDelete).noargs();
+        return BindingBuilder.bind(bookingDeleteQueue()).to(exchangeBooking()).where("action").matches("delete");
     }
 
 

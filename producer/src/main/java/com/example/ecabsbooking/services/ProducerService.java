@@ -1,6 +1,6 @@
-package com.example.ecabsbooking;
+package com.example.ecabsbooking.services;
 
-import com.example.ecabsbooking.DTO.Booking;
+import DTO.Booking;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -26,12 +26,24 @@ public class ProducerService {
     }
 
     public void addBooking(Booking booking) {
-        rabbitTemplate.convertAndSend(exchangeMessage, routingKeyAdd, booking);
+        rabbitTemplate.convertAndSend(exchangeMessage, routingKeyAdd, booking, m -> {
+            m.getMessageProperties().getHeaders().put("action", "add");
+            return m;
+        });
     }
 
     public void editBooking(Booking booking) {
+        rabbitTemplate.convertAndSend(exchangeMessage, routingKeyEdit, booking, m -> {
+            m.getMessageProperties().getHeaders().put("action", "edit");
+            return m;
+        });
     }
 
     public void deleteBooking(Long id) {
+        rabbitTemplate.convertAndSend(exchangeMessage, routingKeyDelete, id, m -> {
+            m.getMessageProperties().getHeaders().put("action", "delete");
+            return m;
+        });
+
     }
 }

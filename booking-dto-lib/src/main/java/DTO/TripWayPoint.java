@@ -1,4 +1,4 @@
-package com.example.ecabsbooking.DTO;
+package DTO;
 
 import lombok.Data;
 

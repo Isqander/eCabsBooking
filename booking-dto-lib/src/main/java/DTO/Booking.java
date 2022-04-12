@@ -1,6 +1,7 @@
-package com.example.ecabsbooking.DTO;
+package DTO;
 
 import lombok.Data;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -21,4 +22,6 @@ public class Booking implements Serializable {
     LocalDateTime createdOn;
     LocalDateTime lastModifiedOn;
     List<TripWayPoint> tripWayPoints;
+
+    //TODO rewrite toString to my version
 }

@@ -1,6 +1,7 @@
-package com.example.ecabsbooking;
+package com.example.ecabsbooking.controllers;
 
-import com.example.ecabsbooking.DTO.Booking;
+import DTO.Booking;
+import com.example.ecabsbooking.services.ProducerService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
