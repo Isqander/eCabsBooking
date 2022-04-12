@@ -26,16 +26,18 @@ public class RabbitMQListener {
     @RabbitListener(queues = "${rabbitmq.queue.add}")
     public void receiveAddMessage(Booking booking) {
         bookingRepository.saveAndFlush(bookingMapper.bookingToEntity(booking));
-        System.out.println("We ADDED a booking: " + booking);
+        log.info("We added a booking: " + booking);
     }
 
     @RabbitListener(queues = "${rabbitmq.queue.edit}")
     public void receiveEditMessage(Booking booking) {
         bookingRepository.saveAndFlush(bookingMapper.bookingToEntity(booking));
+        log.info("We edited a booking: " + booking);
     }
 
     @RabbitListener(queues = "${rabbitmq.queue.delete}")
     public void receiveDeleteMessage(Long id) {
         bookingRepository.deleteById(id);
+        log.info("We deleted a booking by id: " + id);
     }
 }
