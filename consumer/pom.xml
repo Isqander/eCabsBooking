@@ -61,5 +61,10 @@
             <artifactId>booking-dto-lib</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>1.5.0.RC1</version>
+        </dependency>
     </dependencies>
 </project>
