@@ -1,0 +1,17 @@
+version: '3'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+  consumer:
+    image: consumer:latest
+    depends_on:
+      - rabbitmq
+  producer:
+    image: producer:latest
+    depends_on:
+      - rabbitmq
+    ports:
+      - "8080:8080"

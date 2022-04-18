@@ -1,6 +1,6 @@
 
 
-POST http://localhost:8080/bookings/
+POST http://localhost:8080/producer/bookings/
 Content-Type: application/json
 
 {
